@@ -6,6 +6,7 @@
     <x:Property Name="out_emailContent" Type="OutArgument(x:String)" />
     <x:Property Name="in_assessmentCriteriaDT" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_emailFormatFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_trainingTeamEmail" Type="InArgument(x:String)" />
   </x:Members>
   <this:PrepareEmailContentSequence.in_recordDT>
     <InArgument x:TypeArguments="sd:DataTable" />
@@ -100,12 +101,8 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke DataTableToHtml workflow" sap:VirtualizedContainerService.HintSize="384,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="DataTableToHtml.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="Inputdata_DT">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="in_assessmentCriteriaDT" />
-        </InArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="HTML_str">
-          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="sampleRecordHTMLtext" />
-        </OutArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="Inputdata_DT">[in_assessmentCriteriaDT]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="HTML_str">[sampleRecordHTMLtext]</OutArgument>
         <InArgument x:TypeArguments="x:String" x:Key="StyleCSS_str">
           <Literal x:TypeArguments="x:String" Value="" />
         </InArgument>
@@ -116,7 +113,7 @@
         <OutArgument x:TypeArguments="x:String">[out_emailContent]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[String.Format(formatText , in_leadName , in_quarterName , recordHTMLtext , sampleRecordHTMLtext)]</InArgument>
+        <InArgument x:TypeArguments="x:String">[String.Format(formatText , in_leadName , in_quarterName , recordHTMLtext , sampleRecordHTMLtext, in_trainingTeamEmail)]</InArgument>
       </Assign.Value>
     </Assign>
   </Sequence>

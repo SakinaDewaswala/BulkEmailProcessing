@@ -13,7 +13,7 @@ For assessing target achievement of soft skills, the lead & managers are recomme
 </p>
 {3}
 <p>
-Please feel free to write to trainings@infobeans.com if you need any other information.<br/><br/>
+Please feel free to write to {4} if you need any other information.<br/><br/>
 Best Regards,<br/>
 HR Team
 </p>

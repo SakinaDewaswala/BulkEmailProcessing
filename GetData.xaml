@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>458,1525</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>845,1525</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GetData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="23">
@@ -80,7 +80,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadRange AddHeaders="True" DataTable="[assessmentCriteriaDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Criteria" WorkbookPath="[in_configDictionary(&quot;AssessmentCriteriaFilePath&quot;)]">
+    <ui:ReadRange AddHeaders="True" DataTable="[assessmentCriteriaDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Criteria" WorkbookPath="[in_configDictionary(&quot;assessmentCriteriaFilePath&quot;)]">
       <ui:ReadRange.Range>
         <InArgument x:TypeArguments="x:String">
           <Literal x:TypeArguments="x:String" Value="" />
@@ -186,27 +186,20 @@
                   <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="assessmentCriteriaDT" />
                 </InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_emailFormatFilePath">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;EmailFormatFilePath&quot;)" />
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;emailFormatFilePath&quot;)" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_trainingTeamEmail">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;trainingTeamEmailId&quot;)" />
                 </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendEmailSequence workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="SendEmailSequence.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_toAddress">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="row(&quot;Lead Email&quot;).toString" />
-                </InArgument>
-                <InArgument x:TypeArguments="s:String[]" x:Key="in_ccAddress">
-                  <mva:VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{row(&quot;Manager Email&quot;).ToString,in_configDictionary(&quot;trainingTeamEmailId&quot;)}" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_subject">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;emailSubject&quot;)" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_emailContent">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="emailContent" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="emailCredentials">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;emailCredentials&quot;)" />
-                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_toAddress">[row("Lead Email").toString]</InArgument>
+                <InArgument x:TypeArguments="s:String[]" x:Key="in_ccAddress">[{row("Manager Email").ToString,in_configDictionary("trainingTeamEmailId")}]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_subject">[in_configDictionary("emailSubject")]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_emailContent">[emailContent]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="emailCredentials">[in_configDictionary("emailCredentials")]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
