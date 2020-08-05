@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>444,1611</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>458,1525</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GetData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="23">
@@ -65,30 +65,29 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="GetData" sap:VirtualizedContainerService.HintSize="454,1446" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="GetData" sap:VirtualizedContainerService.HintSize="468,1360" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Default="Sample Scores" Name="sheetName" />
       <Variable x:TypeArguments="sd:DataTable" Name="scoreDetails_dt" />
       <Variable x:TypeArguments="x:String" Name="quarter" />
-      <Variable x:TypeArguments="x:String" Name="managerEmail" />
       <Variable x:TypeArguments="x:String" Name="leadName" />
-      <Variable x:TypeArguments="s:String[]" Name="leadEmailArray" />
       <Variable x:TypeArguments="sd:DataTable" Name="teamScore_dt" />
       <Variable x:TypeArguments="sd:DataTable" Name="assessmentCriteriaDT" />
+      <Variable x:TypeArguments="sd:DataTable" Name="leadManager_dt" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadRange AddHeaders="True" DataTable="[assessmentCriteriaDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="412,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Criteria" WorkbookPath="[in_configDictionary(&quot;AssessmentCriteriaFilePath&quot;)]">
+    <ui:ReadRange AddHeaders="True" DataTable="[assessmentCriteriaDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Criteria" WorkbookPath="[in_configDictionary(&quot;AssessmentCriteriaFilePath&quot;)]">
       <ui:ReadRange.Range>
         <InArgument x:TypeArguments="x:String">
           <Literal x:TypeArguments="x:String" Value="" />
         </InArgument>
       </ui:ReadRange.Range>
     </ui:ReadRange>
-    <Assign sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_11">
+    <Assign sap:VirtualizedContainerService.HintSize="426,60" sap2010:WorkflowViewState.IdRef="Assign_11">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[quarter]</OutArgument>
       </Assign.To>
@@ -96,23 +95,23 @@
         <InArgument x:TypeArguments="x:String">[in_filePath.Substring(in_filePath.lastIndexOf("-")+1,3).Trim]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[scoreDetails_dt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="412,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" PreserveFormat="True" SheetName="[sheetName]" WorkbookPath="[in_filePath]" />
-    <ui:RemoveDuplicateRows DataTable="[scoreDetails_dt]" DisplayName="Remove Duplicate Rows" sap:VirtualizedContainerService.HintSize="412,22" sap2010:WorkflowViewState.IdRef="RemoveDuplicateRows_1" OutputDataTable="[scoreDetails_dt]" />
-    <Assign sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[scoreDetails_dt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" PreserveFormat="True" SheetName="[sheetName]" WorkbookPath="[in_filePath]" />
+    <ui:RemoveDuplicateRows DataTable="[scoreDetails_dt]" DisplayName="Remove Duplicate Rows" sap:VirtualizedContainerService.HintSize="426,22" sap2010:WorkflowViewState.IdRef="RemoveDuplicateRows_1" OutputDataTable="[scoreDetails_dt]" />
+    <Assign sap:VirtualizedContainerService.HintSize="426,60" sap2010:WorkflowViewState.IdRef="Assign_7">
       <Assign.To>
-        <OutArgument x:TypeArguments="s:String[]">[leadEmailArray]</OutArgument>
+        <OutArgument x:TypeArguments="sd:DataTable">[leadManager_dt]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[scoreDetails_dt.AsEnumerable.Select(Function(r) r("Lead Email").ToString.Trim ).Distinct.ToArray]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable">[scoreDetails_dt.DefaultView.ToTable(true,"Lead Email","Manager Email")]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="412,838" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[leadEmailArray]">
-      <ui:ForEach.Body>
-        <ActivityAction x:TypeArguments="x:String">
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[leadManager_dt]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="426,752" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:String" Name="leadEmail" />
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,704" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,604" sap2010:WorkflowViewState.IdRef="Sequence_14">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="emailContent" />
             </Sequence.Variables>
@@ -121,7 +120,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:FilterDataTable DataTable="[scoreDetails_dt]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_4" OutputDataTable="[teamScore_dt]" SelectColumnsMode="Keep">
+            <ui:FilterDataTable DataTable="[scoreDetails_dt]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_6" OutputDataTable="[teamScore_dt]" SelectColumnsMode="Keep">
               <ui:FilterDataTable.Filters>
                 <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                   <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
@@ -129,7 +128,15 @@
                       <InArgument x:TypeArguments="x:String">["Lead Email"]</InArgument>
                     </ui:FilterOperationArgument.Column>
                     <ui:FilterOperationArgument.Operand>
-                      <InArgument x:TypeArguments="x:String">[leadEmail]</InArgument>
+                      <InArgument x:TypeArguments="x:Object">[row("Lead Email")]</InArgument>
+                    </ui:FilterOperationArgument.Operand>
+                  </ui:FilterOperationArgument>
+                  <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
+                    <ui:FilterOperationArgument.Column>
+                      <InArgument x:TypeArguments="x:String">["Manager Email"]</InArgument>
+                    </ui:FilterOperationArgument.Column>
+                    <ui:FilterOperationArgument.Operand>
+                      <InArgument x:TypeArguments="x:Object">[row("Manager Email")]</InArgument>
                     </ui:FilterOperationArgument.Operand>
                   </ui:FilterOperationArgument>
                 </scg:List>
@@ -140,15 +147,7 @@
                 </scg:List>
               </ui:FilterDataTable.SelectColumns>
             </ui:FilterDataTable>
-            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_9">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:String">[managerEmail]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="x:String">[teamScore_dt.Rows(0)("Manager Email").ToString]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_14">
               <Assign.To>
                 <OutArgument x:TypeArguments="x:String">[leadName]</OutArgument>
               </Assign.To>
@@ -156,7 +155,7 @@
                 <InArgument x:TypeArguments="x:String">[teamScore_dt.Rows(0)("Lead").ToString]</InArgument>
               </Assign.Value>
             </Assign>
-            <ui:FilterDataTable DataTable="[teamScore_dt]" DisplayName="Filter Data Table" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_5" OutputDataTable="[teamScore_dt]" SelectColumnsMode="Remove">
+            <ui:FilterDataTable DataTable="[teamScore_dt]" DisplayName="Filter Data Table" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_7" OutputDataTable="[teamScore_dt]" SelectColumnsMode="Remove">
               <ui:FilterDataTable.Filters>
                 <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                   <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
@@ -169,7 +168,7 @@
                 </scg:List>
               </ui:FilterDataTable.SelectColumns>
             </ui:FilterDataTable>
-            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke PrepareEmailContentSequence workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="PrepareEmailContentSequence.xaml">
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke PrepareEmailContentSequence workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="PrepareEmailContentSequence.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_leadName">
                   <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="leadName" />
@@ -191,13 +190,13 @@
                 </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendEmailSequence workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="SendEmailSequence.xaml">
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendEmailSequence workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="SendEmailSequence.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_toAddress">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="leadEmail" />
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="row(&quot;Lead Email&quot;).toString" />
                 </InArgument>
                 <InArgument x:TypeArguments="s:String[]" x:Key="in_ccAddress">
-                  <mva:VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{ in_configDictionary(&quot;trainingTeamEmailId&quot;) , managerEmail}" />
+                  <mva:VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{row(&quot;Manager Email&quot;).ToString,in_configDictionary(&quot;trainingTeamEmailId&quot;)}" />
                 </InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_subject">
                   <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_configDictionary(&quot;emailSubject&quot;)" />
@@ -212,7 +211,7 @@
             </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
-      </ui:ForEach.Body>
-    </ui:ForEach>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
   </Sequence>
 </Activity>
