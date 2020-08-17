@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>864,1851</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>857,1851</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GetData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="24">
@@ -171,6 +171,7 @@
                     <scg:List x:TypeArguments="InArgument" Capacity="4">
                       <InArgument x:TypeArguments="x:String">["Lead Email"]</InArgument>
                       <InArgument x:TypeArguments="x:String">["Manager Email"]</InArgument>
+                      <InArgument x:TypeArguments="x:String">["Lead"]</InArgument>
                     </scg:List>
                   </ui:FilterDataTable.SelectColumns>
                 </ui:FilterDataTable>
