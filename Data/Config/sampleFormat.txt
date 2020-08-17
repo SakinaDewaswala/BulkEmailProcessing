@@ -5,15 +5,14 @@
 <body>
 <p>
 Hi {0},<br/><br/>
-We are pleased to share the soft skill assessment scores of your team for {1} target tracking. Please find below the score sheet for your reference.
+We are pleased to share the soft skill assessment scores of your team who appeared in Slot 1 to 3 in {1}. Please find below the score sheet for your reference.
 </p>
 {2}
 <p>
-For assessing target achievement of soft skills, the lead & managers are recommended to use the following grid as a reference point.
+We would also be sharing a consolidated list of scores of your team towards the end of the quarter for target tracking.
 </p>
-{3}
 <p>
-Please feel free to write to {4} if you need any other information.<br/><br/>
+Please feel free to write to trainings@infobeans.com if you need any other information.<br/><br/>
 Best Regards,<br/>
 HR Team
 </p>
